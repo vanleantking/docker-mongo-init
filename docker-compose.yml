@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  mongodb:
+    image: 'mongo:5.0'
+    container_name: 'docker-mongo'
+#    build:
+#      context: .
+#      dockerfile: ./docker/mongo/Dockerfile
+    volumes:
+      - ./docker/mongo/data:/data/db
+      - ./docker/mongo/init/:/docker-entrypoint-initdb.d/
+    restart: always
+    ports:
+      - '40001:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: admin
+    networks:
+      - ad-server
+networks:
+  ad-server:
+    driver: bridge
